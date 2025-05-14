@@ -1,5 +1,16 @@
 {
+  "name": "proyek-websocket",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
   "dependencies": {
-    "ws": "^8.18.1"
+    "express": "^5.1.0",
+    "ws": "^8.18.2"
   }
 }
