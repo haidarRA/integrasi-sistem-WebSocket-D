@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Inventory WebSocket Client</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    #log {
+      border: 1px solid #ccc;
+      padding: 10px;
+      height: 200px;
+      overflow-y: scroll;
+      margin-bottom: 10px;
+    }
+    input, button {
+      margin: 5px;
+    }
+  </style>
+</head>
+<body>
+  <h1>WebSocket Inventory Client</h1>
+
+  <div>
+    <label>Username: <input id="username" type="text" value="admin" /></label>
+    <label>Password: <input id="password" type="password" value="password123" /></label>
+    <button onclick="connect()">Connect</button>
+  </div>
+
+  <div id="controls" style="display:none;">
+    <div>
+      <input id="item" placeholder="Item name" />
+      <input id="quantity" type="number" placeholder="Quantity" />
+      <button onclick="sendAdd()">Add</button>
+      <button onclick="sendObtain()">Obtain</button>
+      <button onclick="sendDelete()">Delete</button>
+      <button onclick="sendGet()">Get Inventory</button>
+      <button onclick="sendPing()">Ping</button>
+    </div>
+  </div>
+
+  <h3>Server Messages:</h3>
+  <div id="log"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>

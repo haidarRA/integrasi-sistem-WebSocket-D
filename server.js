@@ -61,6 +61,7 @@ wss.on('connection', (ws, req) => {
           response = { inventory };
           break;
 
+        /*
         case 'obtain':
           if (!inventory[req.item]) {
             response = { error: `${req.item} does not exist or is out of stock` };
@@ -68,6 +69,17 @@ wss.on('connection', (ws, req) => {
             inventory[req.item]--;
             if (inventory[req.item] === 0) delete inventory[req.item];
             response = { success: `Obtained 1 ${req.item}` };
+          }
+          break;
+        */
+
+        case 'obtain':
+          if (!inventory[req.item] || !req.item || !req.quantity) {
+            response = { error: `${req.item} does not exist or is out of stock` };
+          } else {
+            inventory[req.item] = (inventory[req.item] || 0) - req.quantity;
+            if (inventory[req.item] === 0) delete inventory[req.item];
+            response = { success: `Obtained ${req.quantity} of ${req.item}` };
           }
           break;
 
@@ -81,6 +93,10 @@ wss.on('connection', (ws, req) => {
           }
           break;
 
+        case 'ping':
+          response = { message: 'pong' };
+          break;
+          
         default:
           response = { error: 'Unknown action' };
       }
