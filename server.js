@@ -1,11 +1,38 @@
 const fs = require('fs');
-const https = require('https');
+const http = require('http');
 const WebSocket = require('ws');
 const url = require('url');
+const path = require('path');
 
-const server = https.createServer({
-  cert: fs.readFileSync('cert.pem'),
-  key: fs.readFileSync('key.pem')
+// Handler untuk permintaan HTTP
+const server = http.createServer((req, res) => {
+  // Jika request ke root, kirim file HTML
+  if (req.url === '/' || req.url === '/index.html') {
+    fs.readFile(path.join(__dirname, 'client', 'index.html'), (err, data) => {
+      if (err) {
+        res.writeHead(500);
+        res.end('Error loading index.html');
+        return;
+      }
+      res.writeHead(200, {'Content-Type': 'text/html'});
+      res.end(data);
+    });
+  } 
+  // Handle permintaan JavaScript
+  else if (req.url === '/script.js') {
+    fs.readFile(path.join(__dirname, 'client', 'script.js'), (err, data) => {
+      if (err) {
+        res.writeHead(500);
+        res.end('Error loading script.js');
+        return;
+      }
+      res.writeHead(200, {'Content-Type': 'application/javascript'});
+      res.end(data);
+    });
+  } else {
+    res.writeHead(404);
+    res.end('Not found');
+  }
 });
 
 const MAX_CONNECTIONS = 5;
@@ -128,5 +155,5 @@ function broadcast(data) {
 }
 
 server.listen(8080, () => {
-  console.log('Secure WebSocket server running on wss://localhost:8080');
+  console.log('WebSocket server running on ws://localhost:8080');
 });
